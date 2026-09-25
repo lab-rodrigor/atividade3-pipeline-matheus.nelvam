@@ -26,8 +26,12 @@ jobs:
 
       - name: Derrubar a topologia antiga
         run: |
-          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker stop front api banco" || true
-          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker rm front api banco" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker stop front" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker stop api" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker stop banco" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker rm front" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker rm api" || true
+          ssh -i ~/.ssh/deploy gr-$SLUG@gr.lab.ayty.org "gr-docker rm banco" || true
 
       - name: Criar rede e volume
         run: |
@@ -46,4 +50,5 @@ jobs:
         run: |
           sleep 5
           curl --fail --retry 5 --retry-delay 3 http://gr.lab.ayty.org:$PORTA/api/pokemons
+
 
